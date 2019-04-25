@@ -1,0 +1,16 @@
+.todo-list {
+    margin: 50px 15%;
+    border: 1px solid #eee; 
+    
+    
+    & > ul {
+        overflow: auto;
+        max-height: 350px;
+    }
+}
+
+.sortable-helper {
+    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2), 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: row-resize;
+}

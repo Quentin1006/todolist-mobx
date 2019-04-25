@@ -1,0 +1,24 @@
+$navbar_height: 64px;
+
+.navbar {
+    box-sizing: border-box;
+    height: $navbar_height;
+    background-color: $navy;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    .logo {
+        flex: 0 0 auto;
+        img {
+            width: $navbar_height;
+            height: $navbar_height;
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row-reverse;
+    }
+}

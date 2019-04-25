@@ -1,0 +1,22 @@
+.input-group {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+
+    input {
+        
+        margin-right:0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    } 
+
+    .input-group-addon {
+        background-color: #eee;
+        border: 1px solid grey;
+        padding: 6px 12px;
+        border-left-width: 0px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}

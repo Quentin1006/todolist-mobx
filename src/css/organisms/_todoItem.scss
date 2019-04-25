@@ -1,0 +1,74 @@
+li.todo-item:not(:first-child) {
+    border-top: #eee 1px solid; 
+}
+
+li.todo-item {
+    display: flex;
+    padding: 0 10px;
+    background-color: #fff;
+    transition: background-color 1s;
+
+    .todo-checkbox {
+        width: 40px;
+        padding-right:20px;
+    }
+    
+    .todo-task {
+        flex: 1 1 30%;
+        cursor: pointer;
+    }
+
+    .todo-deadline {
+        padding: 0 10px;
+        border-radius: 4px;
+    }
+
+    .todo-delete {
+        display: flex;
+        justify-content: center;
+        padding-left:20px;
+    }
+
+    .todo-cell.alert {
+        background-color: $col_alert;
+        color: #fff;
+        animation: flashing 2s 2 ease-in-out alternate;
+    }
+
+    .todo-cell.warning {
+        background-color: $col_warning;
+        color: #fff;
+    }
+
+
+    .todo-cell.ok {
+        background-color: $col_ok;
+        color: #fff;
+    }
+
+    & > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+        
+    }
+}
+
+
+li.todo-item.color-in-green {
+    background-color: rgba(173, 255, 47, 0.2);
+    transition: background-color 1s 
+}
+
+@keyframes flashing{
+    from {
+        background-color: $col_alert;
+        color: #fff;
+    }
+
+    to {
+        background-color: transparent;
+        color: inherit
+    }
+}

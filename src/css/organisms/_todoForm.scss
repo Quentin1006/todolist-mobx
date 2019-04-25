@@ -1,0 +1,18 @@
+.todo-form {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 40px 0px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom : 40px;
+    
+
+    & > .todo-input {
+        width: 30%;
+        max-width:300px;
+        min-width:150px;
+        margin: 0px 5px;;
+    }
+}

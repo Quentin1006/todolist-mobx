@@ -1,0 +1,19 @@
+.snackbar-container {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-flow: column-reverse;
+    background-color: transparent;
+    z-index: 100000;
+
+    .snackbar {
+        position: relative;
+        left: 0;
+        bottom: 0;
+    }
+}
+
+.notification-container {
+    font-size: inherit
+}

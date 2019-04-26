@@ -41,6 +41,7 @@ class NotificationBox extends Component {
             <div className={`${typeClass}-container`}>
                 {notifsToDisplay.map(({content, date=0, expire=0, id}) => (
                     <Notif
+                        isOpen={true}
                         date={date}
                         message={content}
                         ttl={expire}

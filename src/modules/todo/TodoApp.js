@@ -5,17 +5,15 @@ import { observer } from 'mobx-react';
 
 import config from "../../config";
 
-import Navbar from "../../components/Navbar";
-import ButtonIcon from "../../components/Button/ButtonIcon";
+import {
+    Navbar,
+    ButtonIcon,
+    NotificationBox
+} from "../../components";
 
 import TodoContainer from "./TodoApp/TodoContainer";
 import LoginButton from './TodoApp/LoginButton';
 import withStores from '../../components/HOC/withStores';
-import { 
-    NotificationBox,
-} from '../../components/Notification';
-
-
 
 
 const {appName, logoImg } = config;
@@ -31,6 +29,7 @@ class TodoApp extends Component {
 
 
     render() {
+        console.log("rendering app");
         const { userStore, uiStore, todoStore, notificationStore } = this.props;
         const {isLoggedIn, logIn, logOut } = userStore;
         const { notifs, remove } = notificationStore;
@@ -58,7 +57,11 @@ class TodoApp extends Component {
                 />
 
                 <If cond={isLoggedIn}>
-                    <TodoContainer userStore={userStore} uiStore={uiStore} todoStore={todoStore}/>
+                    <TodoContainer 
+                        userStore={userStore} 
+                        uiStore={uiStore} 
+                        todoStore={todoStore}
+                    />
                 </If>
             </Fragment>
             
@@ -66,10 +69,10 @@ class TodoApp extends Component {
     }
 }
 
-export default withStores(["todoStore", "userStore", "uiStore", "notificationStore"])(TodoApp);
-    // withTodos(
-    //     withUiState(
-    //         withUser(TodoApp)
-    //     )
-    // )
-    
+export default 
+    withStores([
+        "todoStore", 
+        "userStore", 
+        "uiStore", 
+        "notificationStore"
+    ])(TodoApp);

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
 import { Card } from "../Card"; 
 import NotificationBase from './NotificationBase';
 
 
+
+
 class Snackbar extends Component {
+
     constructor(props){
         super(props);
         this.timeoutId =  null;
@@ -37,24 +39,17 @@ class Snackbar extends Component {
 
 
     render() {
-        const { icon, message, classes } = this.props; 
+        const { icon, message, isOpen, classes } = this.props; 
         return (
+            isOpen && 
             <Card classes={`${classes}`}>
-                
                 <NotificationBase 
                     onClose={this.onClose}
                     message={message}
                     icon={icon}
                     classes={"snackbar"}
                 />
-
-                {/* <div className="icon">
-                    <Icon icon={icon}/>
-                </div>
-                <div className="vertical-splitter"></div>
-                <div className="content">{this.props.message}</div>
-                <div className="close"><a href="#" onClick={this.handleClose}>x</a></div> */}
-            </Card>
+            </Card>    
         );
     }
 }

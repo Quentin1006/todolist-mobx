@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -26,4 +26,4 @@ Icon.propTypes = {
     icon: PropTypes.string.isRequired
 }
 
-export default Icon;
+export default memo(Icon);

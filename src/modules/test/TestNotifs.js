@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 
 import withStores from "../../components/HOC/withStores";
-import { ButtonIcon, Card, NotificationBox } from "../../components";
-
+import { ButtonIcon, Card, NotificationBox, Snackbar } from "../../components";
+import ComponentWithInternalState from "./ComponentWithInternalState";
 
 let id = 0;
 
@@ -30,45 +30,61 @@ class TestNotifs extends Component {
     }
 
 
+    // componentDidUpdate(){
+    //     console.log("TestNotifs updating");
+    // }
+
+
     render() {
         const { notificationStore } = this.props;
         const { remove, notifs } = notificationStore;
         const { volatile, sticky } = notifs.global
         return (
-            <div style={{textAlign: "right"}}>
-            <Card style={{display: "inline-flex",flexFlow:"reverse-row"}}>
-                <fieldset >
-                    <legend>Notification</legend>
-                    <ButtonIcon
-                        icon="plus"
-                        action= {this.createVolatileNotif}
-                        value={"CREATE VOLATILE"}
-                    />
-                    <ButtonIcon
-                        icon="plus"
-                        action= {this.createStickyNotif}
-                        value={"CREATE STICKY"}
-                    />
+            <>
+                <div style={{textAlign: "right"}}>
+                    <Card style={{display: "inline-flex",flexFlow:"reverse-row"}}>
+                        <fieldset >
+                            <legend>Notification</legend>
+                            <ButtonIcon
+                                icon="plus"
+                                action= {this.createVolatileNotif}
+                                value={"CREATE VOLATILE"}
+                            />
+                            <ButtonIcon
+                                icon="plus"
+                                action= {this.createStickyNotif}
+                                value={"CREATE STICKY"}
+                            />
 
-                    {/* SANS CETTE LIGNE notif N'EST PAS UPDATE */}
-                    <div style={{display: "none"}}>
-                    <div>{notifs.global.volatile.reduce((acc, notif) => (acc + " " + notif.id), "")}</div>
-                    <div>{notifs.global.sticky.reduce((acc, notif) => (acc + " " + notif.id), "")}</div>
-                    </div>
-                </fieldset>
+
+                        </fieldset>
+                        <Snackbar 
+                            isOpen={true}
+                            message="Hello im a notifiaction"
+                            onClose={() => {}}
+                        />
+                        {/** 
+                          * This Comp test whether a comp can update his state
+                          * Inside a comp that uses memo
+                         **/
+                        }
+                        <ComponentWithInternalState />
+                    </Card> 
+                </div>  
 
                 <NotificationBox 
                     notifs={volatile} 
                     onCloseNotif={remove}
                     type={"snackbar"}
+
                 />
 
                 {/* <NotificationBox 
                     notifs={sticky}
                     onCloseNotif={remove}
                 /> */}
-            </Card> 
-            </div>
+            </>
+            
         );
     }
 }

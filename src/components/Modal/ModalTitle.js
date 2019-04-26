@@ -13,7 +13,8 @@ const ModalTitle = ({children, value}) => {
 }
 
 ModalTitle.propTypes = {
-
+    children: PropTypes.any,
+    value: PropTypes.string
 };
 
 export default memo(ModalTitle);

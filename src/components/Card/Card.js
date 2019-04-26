@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./card.scss";
 
-class Card extends React.PureComponent {
+class Card extends React.Component {
     render(){
         const { children, classes, ...rest } = this.props;
 
@@ -23,4 +23,4 @@ Card.propTypes = {
     classes: PropTypes.string
 }
 
-export default Card;
+export default React.memo(Card);

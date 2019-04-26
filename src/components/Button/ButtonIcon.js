@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from "prop-types"
 
 import { Icon } from "../Icon";
@@ -29,4 +29,4 @@ ButtonIcon.propTypes = {
 }
 
 
-export default ButtonIcon;
+export default memo(ButtonIcon);

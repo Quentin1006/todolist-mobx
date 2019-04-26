@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
 
@@ -9,14 +9,17 @@ class Modal extends Component {
 
         const isOpen = props.open ? "open" : "";
 
+        // Parent of the modal and the backdrop
         this.container = document.createElement('div');
         this.container.className = `modal-container `+isOpen;
 
+        // What contains the modal
         this.wrapper = document.createElement('div');
         this.wrapper.className = `modal-wrapper`;
 
         this.addCloseBtn(this.wrapper);
 
+        // Backdrop behind the modal
         this.backdrop = document.createElement("div");
         this.backdrop.className = `modal-backdrop`;
 
@@ -27,6 +30,7 @@ class Modal extends Component {
         if(props.closeOnBackdrop){
             this.setAsModalCloser(this.backdrop);
         }
+
     }
 
 
@@ -46,10 +50,10 @@ class Modal extends Component {
         closeEl.className = "modal-close-btn";
         closeEl.href = "#";
         closeEl.setAttribute("style", "position: absolute; right: 10px; top: 10px;");
-        closeEl.innerHTML = "x"
+        closeEl.innerHTML = "x";
 
         this.setAsModalCloser(closeEl);
-        wrapper.appendChild(closeEl)
+        wrapper.appendChild(closeEl);
     }
 
 

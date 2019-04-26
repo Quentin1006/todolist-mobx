@@ -1,4 +1,7 @@
 .btn-icon {
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+
     .btn-value-container {
         display: flex;
         justify-content: space-between;
@@ -9,4 +12,9 @@
         padding-left: 5px;
     }
     
+}
+
+.btn-icon:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
 }

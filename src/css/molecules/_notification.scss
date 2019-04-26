@@ -60,9 +60,9 @@
 
 .snackbar {
     align-items: center;
-    position: fixed;
-    left: 10px;
-    bottom: 50px;
+    // position: fixed;
+    // left: 10px;
+    // bottom: 50px;
     width: 300px;
     max-width: 300px;
     max-height: 100px;
@@ -74,7 +74,6 @@
     .content {
         padding-top : 10px;
         padding-bottom: 10px;
-
     }
 }
 
@@ -84,3 +83,5 @@
         color: $navy
     }
 }
+
+

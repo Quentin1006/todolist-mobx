@@ -5,7 +5,6 @@ import withStores from "../../components/HOC/withStores";
 
 class TestStore extends Component {
     render() {
-        console.log(this.props);
         return (
             <div>
                 

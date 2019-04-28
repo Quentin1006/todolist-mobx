@@ -12,7 +12,7 @@ import If from "../../../components/utils/If";
 @observer
 class LoginButton extends Component {
     onLogin = async () => {
-        const { logIn, closeModal, loginIdentifierInput, setLoginError } = this.props;
+        const { logIn, modal, loginIdentifierInput, setLoginError } = this.props;
         const resp = await logIn(loginIdentifierInput);
 
         if(resp.error){
@@ -20,15 +20,13 @@ class LoginButton extends Component {
         }
 
         if(resp.id){
-            closeModal();
+            modal.close();
         }
     }
     
 
     render() {
         const { 
-            closeModal, 
-            openModal, 
             modal, 
             loginError, 
             loginIdentifierInput,
@@ -42,15 +40,15 @@ class LoginButton extends Component {
             <Fragment>
                 
                 <ButtonIcon
-                    action={openModal}
+                    action={modal.open}
                     value="Log in"
                     icon="sign-in-alt"
                 />
                 
-                <If cond={modal.open}>
+                <If cond={modal.isOpen}>
                     <Modal
-                        open={modal.open}
-                        close={closeModal}
+                        open={modal.isOpen}
+                        close={modal.close}
                     >
                         <ModalTitle>Login</ModalTitle>
                         <LoginForm 
@@ -74,8 +72,6 @@ class LoginButton extends Component {
 LoginButton.propTypes = {
     logIn: PropTypes.func.isRequired,
     modal: PropTypes.object.isRequired,
-    openModal: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired,
     loginError: PropTypes.string,
     loginIdentifierInput: PropTypes.string,
 };

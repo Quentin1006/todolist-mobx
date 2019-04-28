@@ -1,4 +1,5 @@
 import { observable, computed, action } from "mobx";
+import Modal from "../models/Modal";
 
 
 class UiStore {
@@ -13,20 +14,12 @@ class UiStore {
     @observable loginError = "";
 
 
-    @observable.struct modal = {
-        open: false,
-    }
+    modal = new Modal();
 
     @observable.struct windowDimensions = {
         width: window.outerWidth,
         height: window.outerHeight
     }
-
-
-    @computed 
-    get lastNotif(){
-        return notifs.global.volatile[0];
-    } 
 
 
     @computed 
@@ -58,26 +51,6 @@ class UiStore {
     updateDateInput = (date) => {
         this.todoDateInput = date;
     }
-
-
-    @action.bound
-    openModal = () => {
-        this.modal = {
-            ...this.modal,
-            open: true
-        }
-    }
-
-
-    @action.bound
-    closeModal = () => {
-        this.modal = {
-            ...this.modal,
-            open: false
-        }
-    }
-
-
 }
 
 export default UiStore;

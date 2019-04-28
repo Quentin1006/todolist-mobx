@@ -27,8 +27,6 @@ class TodoContainer extends Component {
             updateTaskInput, 
             updateDateInput,
             modal,
-            openModal,
-            closeModal
         } = uiStore;
 
         const { todos, create, remove, reorder, toggleComplete } = todoStore;
@@ -54,19 +52,17 @@ class TodoContainer extends Component {
 
                 <ButtonIcon 
                     value={"OPEN MODAL"}
-                    action={openModal}
+                    action={modal.open}
                     icon="plus"
                 />
 
-                {
-                    modal.open &&
-                    <Modal
-                        open={modal.open}
-                        close={closeModal}
-                    >
-                        <ModalTitle>Hallo Modal</ModalTitle>
-                    </Modal>
-                }
+                {modal.isOpen &&
+                <Modal
+                    open={modal.isOpen}
+                    close={modal.close}
+                >
+                    <ModalTitle>Hallo Modal</ModalTitle>
+                </Modal>}
             </section>
         );
     }

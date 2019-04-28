@@ -16,7 +16,7 @@ import Login from './TodoApp/Login';
 import withStores from '../../components/HOC/withStores';
 
 
-const {appName, logoImg, User } = config;
+const {appName, logoImg } = config;
 
 
 @observer
@@ -33,8 +33,6 @@ class TodoApp extends Component {
         const {isLoggedIn, logIn, toggleRememberme, rememberme } = userStore;
         const { notifs, remove } = notificationStore;
         const { 
-            closeModal, 
-            openModal, 
             modal, 
             loginError, 
             loginIdentifierInput,
@@ -54,8 +52,6 @@ class TodoApp extends Component {
                         />
                         : <Login
                             logIn={logIn}
-                            closeModal={closeModal}
-                            openModal={openModal}
                             modal={modal}
                             loginError={loginError}
                             loginIdentifierInput={loginIdentifierInput}

@@ -56,7 +56,7 @@ class UserStore {
     @computed
     get sessionIsExpired(){
         if(shouldExpire){
-            return Date.now() - (this.lastConnection + this.timeout) < 0;
+            return Date.now() - (this.lastConnection + this.timeout) > 0;
         }
         return false;
     }

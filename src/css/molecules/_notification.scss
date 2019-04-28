@@ -53,9 +53,16 @@
 
 
 .notification.info {
-    background-color: $col_info;
-    color: $navy;
+    background-color: $col_bg_info;
+    color: $col_info;
 }
+
+
+.notification.error {
+    background-color: $col_bg_alert;
+    color: $col_alert;
+}
+
 
 
 .snackbar {
@@ -79,8 +86,8 @@
 
 .snackbar.info {
     .icon {
-        background-color: $col_info;
-        color: $navy
+        background-color: $col_bg_info;
+        color: $col_info
     }
 }
 

@@ -5,8 +5,6 @@ import { Card } from "../Card";
 import NotificationBase from './NotificationBase';
 
 
-
-
 class Snackbar extends Component {
 
     constructor(props){
@@ -22,6 +20,7 @@ class Snackbar extends Component {
         this.props.onClose();
     }
 
+    
     autoDestruct = () => {
         let { ttl, onClose } = this.props;
         if(ttl < 999){

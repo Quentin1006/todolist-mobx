@@ -44,7 +44,7 @@ class TodoForm extends Component {
                     <label htmlFor={TODO_TASK_ID}>Task:
                     <TextInput 
                         id={TODO_TASK_ID}
-                        onHandleChange={updateTaskInput}
+                        onChange={updateTaskInput}
                         value={taskInput}
                         placeholder={"Enter your task..."}
                     />
@@ -54,7 +54,7 @@ class TodoForm extends Component {
                     <label htmlFor={TODO_DATE_ID}>Deadline:
                     <CalendarInput 
                         id={TODO_DATE_ID}
-                        onHandleChange={updateDateInput}
+                        onChange={updateDateInput}
                         icon="calendar-alt"
                         value={dateInput}
                         placeholder={"Enter the deadline"}

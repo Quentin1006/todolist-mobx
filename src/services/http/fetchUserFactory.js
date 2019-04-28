@@ -1,18 +1,29 @@
-const url = 'https://randomuser.me/api/';
-const params = {
-    nat: "fr",
-    inc: "id,gender,name,email,picture,nat",
-    seed: "helloworld",
-    noinfo: true
-}
+import config from "../../config";
+
+const { User } = config;
+
+const {
+    fetchUrl, 
+    fetchParams, 
+    msg
+} = User;
+
 
 const FetchUserFactory = (request) => {
-    return () => {
-        return request(url, {
-            params,
+    return (creds="") => {
+        if(creds.toLowerCase() !== "basile"){
+            return {error: msg.USER_NO_MATCH}
+        }
+
+        return request(fetchUrl, {
+            params: fetchParams,
         })
-        .then(resp => resp.data.results[0])
-    } 
+        .then(resp => {
+            const user = resp.data.results[0];
+            return {user};
+        })
+        .catch(error=> ({error: error.text()}));
+    }
 }
 
 export default FetchUserFactory;

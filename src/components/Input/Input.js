@@ -8,9 +8,9 @@ const types = [
 
 class Input extends Component {
 
-    onHandleChange = (e) => {
+    handleChange = (e) => {
         const value = e.target.value;
-        this.props.onHandleChange(value);
+        this.props.onChange(value);
     }
 
     render() {
@@ -19,23 +19,23 @@ class Input extends Component {
             name="",
             type,
             value="",
+            onChange,
             placeholder,
-            inputProps
-
+            ...otherProps
         } = this.props;
         
-
+        
         return (
 
             <input 
                 className="input"
                 id={id}
                 type={type}
-                name={name}
-                onChange={this.onHandleChange}
+                name={name? name: id}
+                onChange={this.handleChange}
                 placeholder={placeholder}
                 value={value}
-                {...inputProps}
+                {...otherProps}
             />            
         );
     }
@@ -44,7 +44,7 @@ class Input extends Component {
 Input.propTypes = {
     id: PropTypes.string.isRequired,
     type: PropTypes.oneOf(types).isRequired,
-    onHandleChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
     name: PropTypes.string,
 
 }

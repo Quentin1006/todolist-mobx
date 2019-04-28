@@ -30,19 +30,19 @@ li.todo-item {
     }
 
     .todo-cell.alert {
-        background-color: $col_alert;
-        color: #fff;
+        background-color: $col_bg_alert;
+        color: $col_alert;
         animation: flashing 2s 2 ease-in-out alternate;
     }
 
     .todo-cell.warning {
-        background-color: $col_warning;
+        background-color: $col_bg_warning;
         color: #fff;
     }
 
 
     .todo-cell.ok {
-        background-color: $col_ok;
+        background-color: $col_bg_ok;
         color: #fff;
     }
 
@@ -63,8 +63,8 @@ li.todo-item.color-in-green {
 
 @keyframes flashing{
     from {
-        background-color: $col_alert;
-        color: #fff;
+        background-color: $col_bg_alert;
+        color: $col_alert;
     }
 
     to {

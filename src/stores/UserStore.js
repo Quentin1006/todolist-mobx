@@ -1,15 +1,23 @@
 import { observable, computed, action } from "mobx";
+
 import clientDb from "../services/clientDb";
 import config from "../config";
 
-const { User, persistLogin } = config;
+const { User } = config;
+const { userNameInClientDb, session } = User;
+const { shouldExpire, timeout } = session;
 
 class UserStore {
     rootStore;
     httpService;
+    userNameInClientDb = "userinfo";
+    timeout = timeout;
 
     @observable isLoggedIn = false;
     @observable isLoading = false;
+    @observable autoConnect = false;
+    @observable rememberme = false;
+    @observable lastConnection = 0;
 
     @observable.struct userinfo = {
         id:{},
@@ -40,41 +48,73 @@ class UserStore {
 
     @computed
     get userId(){
-        const id = this.userinfo && this.userinfo.id
-        return  id && id.value
+        const id = this.userinfo && this.userinfo.id;
+        return  id && id.value;
+    }
+
+
+    @computed
+    get sessionIsExpired(){
+        if(shouldExpire){
+            return Date.now() - (this.lastConnection + this.timeout) < 0;
+        }
+        return false;
+    }
+
+
+
+    @action.bound
+    toggleAutoConnect = () => {
+        this.autoConnect = !this.autoConnect;
+        return this.autoConnect;
+    }
+
+    
+    @action.bound
+    toggleRememberme = () => {
+        this.rememberme = !this.rememberme;
+        return this.rememberme;
     }
 
 
     @action.bound
-    logIn = async (creds) =>{
-
-        let userinfo = {};
-
+    logIn = async (creds) => {
         if(this.isLoggedIn){
             return this.userinfo;
         }
 
-        userinfo = clientDb.get("userinfo")
-        if(persistLogin && userinfo){
+        const userFromClientDb = clientDb.get(userNameInClientDb);
+        if(userFromClientDb){
             this.isLoggedIn = true;
-            this.userinfo = JSON.parse(userinfo);
-
-            return this.userinfo
-        }
-
-        userinfo = await this.httpService.fetchUser(creds);
-        if(userinfo.id){
-            this.userinfo = userinfo;
-            this.isLoggedIn = true;
-            persistLogin && clientDb.set("userinfo", JSON.stringify(userinfo))
-
+            this.userinfo = JSON.parse(userFromClientDb);
             return this.userinfo;
         }
 
-        return {error: User.msg.USER_NO_MATCH}
+        const {error, user} = await this.httpService.fetchUser(creds);
+        
+        if(error){
+            return {error};
+        }
+
+        this.lastConnection = Date.now();
+        if(user){
+            this.userinfo = user;
+            this.isLoggedIn = true;
+        }
+
+        if(this.rememberme){
+            clientDb.set(
+                userNameInClientDb, 
+                JSON.stringify(user)
+            );
+        }
+
+
+        return this.userinfo;
+
     }
 
-
+    
     @action.bound
     logOut = () => {
         if(!this.isLoggedIn){
@@ -83,6 +123,8 @@ class UserStore {
 
         this.userinfo = null;
         this.isLoggedIn = false;
+        this.rememberme = false;
+
         clientDb.remove("userinfo")
     }
 }

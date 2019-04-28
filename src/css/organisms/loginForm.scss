@@ -1,0 +1,26 @@
+.form-login-container {
+    display: flex;
+    flex-flow: column nowrap;
+
+    & > .login-nameinput-wrapper {
+        margin: 10px 0px;
+    }
+
+    & > .login-submit-wrapper {
+        display: flex;
+        align-self: flex-end;
+        flex: 0 0 auto;
+    }
+
+    &  .notification {
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .label-rememberme {
+        font-weight: 200;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+}

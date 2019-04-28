@@ -5,8 +5,12 @@ class UiStore {
     @observable theme = "basic";
     @observable language = "fr_FR";
     @observable pendingRequest = 0;
+    
     @observable todoTaskInput = "";
     @observable todoDateInput = "";
+
+    @observable loginIdentifierInput = "";
+    @observable loginError = "";
 
 
     @observable.struct modal = {
@@ -29,6 +33,19 @@ class UiStore {
     get appIsSync(){
         return this.pendingRequest === 0;
     }
+
+    
+    @action.bound
+    setLoginIdentifier = (identifier) => {
+        this.loginIdentifierInput = identifier;
+        console.log(this.loginIdentifierInput);
+    }
+
+
+    @action.bound
+    setLoginError = (errMsg) => {
+        this.loginError = errMsg
+    } 
 
 
     @action.bound

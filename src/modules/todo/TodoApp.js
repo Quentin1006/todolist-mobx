@@ -12,27 +12,35 @@ import {
 } from "../../components";
 
 import TodoContainer from "./TodoApp/TodoContainer";
-import LoginButton from './TodoApp/LoginButton';
+import Login from './TodoApp/Login';
 import withStores from '../../components/HOC/withStores';
 
 
-const {appName, logoImg } = config;
+const {appName, logoImg, User } = config;
 
 
 @observer
 class TodoApp extends Component {
-    
-    async componentDidMount(){
-        const { todoStore } = this.props;
-        await todoStore.load();
+    handleLogOut = () => {
+        const { logOut } = this.props.userStore;
+        logOut();
+
     }
 
 
     render() {
-        console.log("rendering app");
         const { userStore, uiStore, todoStore, notificationStore } = this.props;
-        const {isLoggedIn, logIn, logOut } = userStore;
+        const {isLoggedIn, logIn, toggleRememberme, rememberme } = userStore;
         const { notifs, remove } = notificationStore;
+        const { 
+            closeModal, 
+            openModal, 
+            modal, 
+            loginError, 
+            loginIdentifierInput,
+            setLoginIdentifier,
+            setLoginError
+        } = uiStore;
         const { sticky } = notifs.global;
         return (
             <Fragment>
@@ -40,12 +48,21 @@ class TodoApp extends Component {
                     {
                         isLoggedIn 
                         ? <ButtonIcon 
-                            action={ logOut} 
-                            icon="igloo"
+                            action={ this.handleLogOut} 
+                            icon="power-off"
                             value="Log out"
                         />
-                        : <LoginButton
+                        : <Login
                             logIn={logIn}
+                            closeModal={closeModal}
+                            openModal={openModal}
+                            modal={modal}
+                            loginError={loginError}
+                            loginIdentifierInput={loginIdentifierInput}
+                            setLoginIdentifier={setLoginIdentifier}
+                            setLoginError={setLoginError}
+                            toggleRememberme={toggleRememberme}
+                            rememberme={rememberme}
                         />       
                     }
                                  

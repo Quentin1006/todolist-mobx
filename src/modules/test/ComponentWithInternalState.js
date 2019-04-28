@@ -9,7 +9,7 @@ class ComponentWithInternalState extends Component {
     componentDidMount(){
         setInterval(()=> {
             this.setState({x: n++})
-        }, 5000)
+        }, 60000)
     }
 
 

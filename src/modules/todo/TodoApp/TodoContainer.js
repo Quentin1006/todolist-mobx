@@ -13,6 +13,10 @@ import { Modal, ModalTitle } from "../../../components/Modal";
 
 @observer
 class TodoContainer extends Component {
+    async componentDidMount(){
+        const { todoStore } = this.props;
+        await todoStore.load();
+    }
 
     render() {
         const { userStore, uiStore, todoStore } = this.props;

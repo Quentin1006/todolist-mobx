@@ -9,7 +9,7 @@ class Notification extends Component {
     render() {
         const { type, message, icon, onClose } = this.props;
         return (
-            <NotificationBase 
+        <NotificationBase 
                 onClose={onClose}
                 message={message}
                 icon={icon}

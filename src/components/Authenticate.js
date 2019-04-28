@@ -1,14 +1,29 @@
 import React, { Component, Fragment } from 'react';
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
+
+import withAuthenticate from "./HOC/withAuthenticate";
 
 
 @observer
 class Authenticate extends Component {
 
     async componentDidMount(){
-        const { logIn } = this.props;
-        await logIn();
+        await this.authenticate(); 
     }
+
+
+    async componentDidUpdate(){
+        await this.authenticate();
+    }
+
+    
+    authenticate = async () => {
+        const { rememberme, logIn } = this.props;
+        if(rememberme){
+            await logIn();
+        }
+    }
+
 
     render(){
         return (
@@ -19,10 +34,6 @@ class Authenticate extends Component {
     }
 }
 
-const mapStateToProps = ({store}) => {
-    const {logIn} = store.userStore;
-    return {logIn}
-}
 
 
-export default inject(mapStateToProps)(Authenticate);
+export default withAuthenticate(Authenticate);

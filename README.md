@@ -1,3 +1,3 @@
-# sample-react-mobx-project
+# todolist 
 
-Starter ReactJS application to work with MobX 5, Webpack4 and Babel 7
+React16 Mobx5 AtomicCss Webpack4 Babel7

@@ -1,5 +1,6 @@
 import { observable, computed, action } from "mobx";
 import Modal from "../models/Modal";
+import Input from "../models/Input";
 
 
 class UiStore {
@@ -7,11 +8,9 @@ class UiStore {
     @observable language = "fr_FR";
     @observable pendingRequest = 0;
     
-    @observable todoTaskInput = "";
-    @observable todoDateInput = "";
-
-    @observable loginIdentifierInput = "";
-    @observable loginError = "";
+    @observable todoTaskInput = new Input();
+    @observable todoDateInput = new Input();
+    @observable loginIdentifierInput = new Input();
 
 
     modal = new Modal();
@@ -25,31 +24,6 @@ class UiStore {
     @computed 
     get appIsSync(){
         return this.pendingRequest === 0;
-    }
-
-    
-    @action.bound
-    setLoginIdentifier = (identifier) => {
-        this.loginIdentifierInput = identifier;
-        console.log(this.loginIdentifierInput);
-    }
-
-
-    @action.bound
-    setLoginError = (errMsg) => {
-        this.loginError = errMsg
-    } 
-
-
-    @action.bound
-    updateTaskInput = (val) => {
-        this.todoTaskInput = val;
-    }
-
-
-    @action.bound
-    updateDateInput = (date) => {
-        this.todoDateInput = date;
     }
 }
 

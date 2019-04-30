@@ -11,16 +11,15 @@ class Authenticate extends Component {
         await this.authenticate(); 
     }
 
-
-    async componentDidUpdate(){
-        await this.authenticate();
-    }
-
     
     authenticate = async () => {
-        const { rememberme, logIn } = this.props;
-        if(rememberme){
-            await logIn();
+        const { rememberme, setUser, logInFromSessId } = this.props;
+        const { user, error } = rememberme ? await logInFromSessId() : {};
+        if(user){
+            setUser(user);
+        }
+        if(error){
+            // Do something with error
         }
     }
 

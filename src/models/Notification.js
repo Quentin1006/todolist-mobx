@@ -17,10 +17,10 @@ class Notification {
 
 
     /**
-     * Kind peut etre info, error, warning
+     * level peut etre info, success, error, warning
      * concerne l'utilisateur
      */
-    @observable kind;
+    @observable level;
 
 
     @computed 
@@ -37,14 +37,14 @@ class Notification {
     constructor({
         content,
         type=Notification.VOLATILE, 
-        kind="info", 
+        level="info", 
         expire=TTL,
         global=true,
     }){
         this.content = content;
         // on force la notif a etre volatile si elle est locale
         this.type = global ? type : Notification.VOLATILE
-        this.kind = kind;
+        this.level = level;
         this.date = Date.now();
         this.id = `id${this.date}`;
         // Si la notif est sticky elle ne peut pas expirer

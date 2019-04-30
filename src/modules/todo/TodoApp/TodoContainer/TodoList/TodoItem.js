@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import format from "date-fns/format";
 
-import ButtonIcon from "../../../../../components/Button/ButtonIcon"
+import {ButtonIcon, CheckboxInput } from "../../../../../components"
 import { observer } from 'mobx-react';
 
 
@@ -25,8 +25,8 @@ class TodoItem extends Component {
         return (
             <li className={`todo-item ${colorInGreen}`}>
                 <div className="todo-checkbox">
-                    <input 
-                        type="checkbox" 
+                    <CheckboxInput  
+                        id={"todo-checkbox"}
                         checked={todo.completed}
                         value={todo.completed} 
                         onChange={todo.toggleComplete}

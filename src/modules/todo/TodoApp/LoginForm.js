@@ -9,34 +9,38 @@ import CheckboxInput from '../../../components/Input/CheckboxInput';
 
 @observer
 class LoginForm extends Component {
- 
+    componentWillUnmount(){
+        const { loginIdentifierInput } = this.props;
+        loginIdentifierInput.reset();
+    }
+
+    
     render() {
         const { 
-            onLogin, 
-            loginError, 
+            logIn, 
             loginIdentifierInput, 
-            setLoginIdentifier,
-            setLoginError,
             toggleRememberme,
             rememberme
         } = this.props;
 
+        const { error, setError, value, setValue } = loginIdentifierInput;
+
         return (
             <div className="form-login-container">  
                 
-                {loginError.length > 0 &&
+                {error.length > 0 &&
                 <div>
                     <Notification
-                        onClose={() => {setLoginError("")}}
+                        onClose={() => {setError("")}}
                         type="error"
-                        message={loginError}
+                        message={error}
                     />
                 </div>}
                 <div className="login-nameinput-wrapper">
                     <TextInput 
                         id="form-login-input"
-                        onChange={setLoginIdentifier}
-                        value={loginIdentifierInput}
+                        onChange={setValue}
+                        value={value}
                         placeholder="Enter your name..."
                     />  
                 </div>
@@ -51,7 +55,7 @@ class LoginForm extends Component {
                 </div>
                 <div className="login-submit-wrapper">
                     <ButtonIcon
-                        action={ onLogin }
+                        action={logIn}
                         icon="sign-in-alt"
                         value="Login"
                     />
@@ -63,7 +67,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-    onLogin: PropTypes.func.isRequired,
+    logIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

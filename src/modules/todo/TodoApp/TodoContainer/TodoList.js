@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import PropTypes from "prop-types";
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { observer } from 'mobx-react';
 
 // HOC
@@ -53,6 +54,10 @@ class TodoList extends Component {
 
 TodoList.defaultProps = {
     todos: []
+}
+
+TodoList.propTypes = {
+    todos: PropTypes.array.isRequired
 }
 
 

@@ -14,7 +14,8 @@ export {
     TextInput,
     CalendarInput,
     InputGroup,
-    Input
+    Input,
+    CheckboxInput
 } from "./Input";
 
 export { default as Navbar } from "./Navbar";

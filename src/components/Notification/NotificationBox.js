@@ -39,11 +39,12 @@ class NotificationBox extends Component {
 
         return (
             <div className={`${typeClass}-container`}>
-                {notifsToDisplay.map(({content, date=0, expire=0, id}) => (
+                {notifsToDisplay.map(({content, date=0, expire=0, level, id}) => (
                     <Notif
                         isOpen={true}
                         date={date}
                         message={content}
+                        level={level}
                         ttl={expire}
                         onClose={this.handleCloseNotif(id)}
                         key={id}

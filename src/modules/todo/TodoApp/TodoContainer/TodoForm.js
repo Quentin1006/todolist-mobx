@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { observer } from 'mobx-react';
 
-import { TextInput, CalendarInput } from "../../../../components/Input";
-import ButtonIcon from "../../../../components/Button/ButtonIcon";
+import { 
+    TextInput, 
+    CalendarInput, 
+    Notification, 
+    ButtonIcon 
+} from "../../../../components";
 
 
 const TODO_TASK_ID = "todo-task";
@@ -18,60 +23,87 @@ class TodoForm extends Component {
 
     onHandleSubmit = (e) => {
         e.preventDefault();
-        console.log("event type: ", e.type);
-        const { taskInput, dateInput, onSubmit } = this.props;
-        onSubmit({
-            task: taskInput,
-            deadline: this._asTimestamp(dateInput)
+        const { inputs, createTodo } = this.props;
+        const [ todoTaskInput, todoDateInput ] = inputs;
+
+        const {error, todo } = createTodo({
+            task: todoTaskInput.value,
+            deadline: this._asTimestamp(todoDateInput.value)
         });
 
-        return false;
+        if(error && error.task){
+            return todoTaskInput.setError(error.task);
+        }
+
+        if(error && error.date){
+            return todoDateInput.setError(error.date)
+        }
+
+        inputs.forEach(input => {
+            input.reset();
+        })
+       
+        return todo;
 
     }
 
     render() {
-        const { 
-            taskInput, 
-            dateInput, 
-            updateTaskInput, 
-            updateDateInput 
-        } = this.props;
-
+        const { inputs } = this.props;
+        const [ todoTaskInput, todoDateInput ] = inputs 
 
         return (
-            <form name={FORM_NAME} className="todo-form" noValidate>
-                <div className="todo-task todo-input">
-                    <label htmlFor={TODO_TASK_ID}>Task:
-                    <TextInput 
-                        id={TODO_TASK_ID}
-                        onChange={updateTaskInput}
-                        value={taskInput}
-                        placeholder={"Enter your task..."}
-                    />
-                    </label>
-                </div>
-                <div className="todo-date todo-input">
-                    <label htmlFor={TODO_DATE_ID}>Deadline:
-                    <CalendarInput 
-                        id={TODO_DATE_ID}
-                        onChange={updateDateInput}
-                        icon="calendar-alt"
-                        value={dateInput}
-                        placeholder={"Enter the deadline"}
-                    />
-                    </label>
-                </div>
-                <div className="todo-submit">
-                    <ButtonIcon 
-                        icon={"plus"} 
-                        action={this.onHandleSubmit}
-                        value="Ajouter"
-                    />
-                </div>
-                
-            </form>
+            <div className="todo-form-wrapper">
+                {inputs.map(input => {
+                    return (
+                        input.error &&
+                        <Notification 
+                            key={input.id}
+                            level="error"
+                            message={input.error}
+                            onClose={input.reset}
+                            classes={"todo-task-error"}
+                        /> 
+                    )
+                })}
+                    
+                <form name={FORM_NAME} className="todo-form" noValidate>
+                    <div className="todo-task todo-input">
+                        <label htmlFor={TODO_TASK_ID}>Task:
+                        <TextInput 
+                            id={TODO_TASK_ID}
+                            onChange={todoTaskInput.setValue}
+                            value={todoTaskInput.value}
+                            placeholder={"Enter your task..."}
+                        />
+                        </label>
+                    </div>
+                    <div className="todo-date todo-input">
+                        <label htmlFor={TODO_DATE_ID}>Deadline:
+                        <CalendarInput 
+                            id={TODO_DATE_ID}
+                            onChange={todoDateInput.setValue}
+                            icon="calendar-alt"
+                            value={todoDateInput.value}
+                            placeholder={"Enter the deadline"}
+                        />
+                        </label>
+                    </div>
+                    <div className="todo-submit">
+                        <ButtonIcon 
+                            icon={"plus"} 
+                            action={this.onHandleSubmit}
+                            value="Ajouter"
+                        />
+                    </div>
+                    
+                </form>
+            </div>
         );
     }
+}
+
+TodoForm.propTypes = {
+    inputs: PropTypes.array.isRequired
 }
 
 export default TodoForm;

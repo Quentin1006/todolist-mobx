@@ -7,33 +7,20 @@ import { Modal, ModalTitle, ButtonIcon } from "../../../components";
 import LoginForm from "./LoginForm"
 import If from "../../../components/utils/If";
 
+import Input from "../../../models/Input";
+
 
 
 @observer
-class LoginButton extends Component {
-    onLogin = async () => {
-        const { logIn, modal, loginIdentifierInput, setLoginError } = this.props;
-        const resp = await logIn(loginIdentifierInput);
-
-        if(resp.error){
-            setLoginError(resp.error);
-        }
-
-        if(resp.id){
-            modal.close();
-        }
-    }
-    
-
+class Login extends Component {
     render() {
         const { 
-            modal, 
-            loginError, 
+            modal,  
             loginIdentifierInput,
-            setLoginIdentifier,
-            setLoginError,
             toggleRememberme,
-            rememberme
+            rememberme, 
+            logInText,
+            logIn
         } = this.props;
         
         return (
@@ -41,7 +28,7 @@ class LoginButton extends Component {
                 
                 <ButtonIcon
                     action={modal.open}
-                    value="Log in"
+                    value={logInText}
                     icon="sign-in-alt"
                 />
                 
@@ -50,17 +37,13 @@ class LoginButton extends Component {
                         open={modal.isOpen}
                         close={modal.close}
                     >
-                        <ModalTitle>Login</ModalTitle>
+                        <ModalTitle>{logInText}</ModalTitle>
                         <LoginForm 
-                            onLogin={this.onLogin}
-                            loginError={loginError}
+                            logIn={logIn}
                             loginIdentifierInput = {loginIdentifierInput}
-                            setLoginIdentifier = {setLoginIdentifier}
-                            setLoginError= {setLoginError}
                             rememberme={rememberme}
                             toggleRememberme={toggleRememberme}
                         />
-                        
                     </Modal>
                 </If>
                 
@@ -69,11 +52,10 @@ class LoginButton extends Component {
     }
 }
 
-LoginButton.propTypes = {
+Login.propTypes = {
     logIn: PropTypes.func.isRequired,
     modal: PropTypes.object.isRequired,
-    loginError: PropTypes.string,
-    loginIdentifierInput: PropTypes.string,
+    loginIdentifierInput: PropTypes.instanceOf(Input),
 };
 
-export default LoginButton;
+export default Login;

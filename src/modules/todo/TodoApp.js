@@ -16,54 +16,77 @@ import Login from './TodoApp/Login';
 import withStores from '../../components/HOC/withStores';
 
 
-const {appName, logoImg } = config;
+const {appName, logoImg, LOG_OUT, LOG_IN, SUCCESS, Session } = config;
 
 
 @observer
 class TodoApp extends Component {
+
+
     handleLogOut = () => {
-        const { logOut } = this.props.userStore;
+        const { logOut } = this.props.sessionStore;
         logOut();
 
     }
 
 
+    handleLogIn = async () => {
+        const { logIn } = this.props.sessionStore;
+        const { setUser } = this.props.userStore;
+        const { modal, loginIdentifierInput } = this.props.uiStore;
+
+        const {error, user} = await logIn(loginIdentifierInput.value);
+
+        if(error){
+            loginIdentifierInput.setError(error);
+        }
+
+        if(user){
+            setUser(user);
+            loginIdentifierInput.reset();
+            modal.close();
+
+            this.props.notificationStore.add({
+                content: Session.msg.IS_NOW_LOGGED_IN,
+                level: SUCCESS,
+                expire: 3
+            })
+
+        }
+    }
+
+
     render() {
-        const { userStore, uiStore, todoStore, notificationStore } = this.props;
-        const {isLoggedIn, logIn, toggleRememberme, rememberme } = userStore;
+        const { userStore, uiStore, todoStore, notificationStore, sessionStore } = this.props;
+        const {isLoggedIn, toggleRememberme, rememberme } = sessionStore;
+        const { setUser } = userStore;
         const { notifs, remove } = notificationStore;
         const { 
             modal, 
-            loginError, 
             loginIdentifierInput,
-            setLoginIdentifier,
-            setLoginError
         } = uiStore;
         const { sticky } = notifs.global;
         return (
             <Fragment>
                 <Navbar logoTitle={appName} logoImg={logoImg} {...this.props}>
-                    {
-                        isLoggedIn 
-                        ? <ButtonIcon 
-                            action={ this.handleLogOut} 
-                            icon="power-off"
-                            value="Log out"
-                        />
-                        : <Login
-                            logIn={logIn}
-                            modal={modal}
-                            loginError={loginError}
-                            loginIdentifierInput={loginIdentifierInput}
-                            setLoginIdentifier={setLoginIdentifier}
-                            setLoginError={setLoginError}
-                            toggleRememberme={toggleRememberme}
-                            rememberme={rememberme}
-                        />       
-                    }
+                    {isLoggedIn 
+                    ? <ButtonIcon 
+                        action={ this.handleLogOut} 
+                        icon="power-off"
+                        value={LOG_OUT}
+                    />
+                    : <Login
+                        logIn={this.handleLogIn}
+                        logInText={LOG_IN}
+                        setUser={setUser}
+                        modal={modal}
+                        loginIdentifierInput={loginIdentifierInput}
+                        toggleRememberme={toggleRememberme}
+                        rememberme={rememberme}
+                    />}
                                  
                 </Navbar>
-                <div style={{display:"none"}}>{notifs.global.sticky.reduce((acc, notif) => (acc + " " + notif.id), "")}</div>
+                
                 <NotificationBox 
                     notifs={sticky} 
                     onCloseNotif={remove}
@@ -74,6 +97,7 @@ class TodoApp extends Component {
                         userStore={userStore} 
                         uiStore={uiStore} 
                         todoStore={todoStore}
+                        notificationStore={notificationStore}
                     />
                 </If>
             </Fragment>
@@ -86,6 +110,7 @@ export default
     withStores([
         "todoStore", 
         "userStore", 
-        "uiStore", 
+        "uiStore",
+        "sessionStore",
         "notificationStore"
     ])(TodoApp);

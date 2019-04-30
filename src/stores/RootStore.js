@@ -1,6 +1,7 @@
 import UiStore from "./UiStore";
 import TodoStore from "./TodoStore";
 import UserStore from "./UserStore";
+import SessionStore from "./SessionStore";
 import NotificationStore from "./NotificationStore";
 
 import { HttpService } from "../services/http"
@@ -16,6 +17,7 @@ class RootStore {
         });
 
         this.userStore = new UserStore(this, httpService);
+        this.sessionStore = new SessionStore(this, httpService);
         this.todoStore = new TodoStore(this, httpService);
         this.notificationStore = new NotificationStore(this, httpService);
         

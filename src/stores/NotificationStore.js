@@ -71,10 +71,10 @@ class NotificationStore {
 
 
     @action.bound
-    add = ({content, type=Notification.VOLATILE, kind, expire}) => {
+    add = ({content, type=Notification.VOLATILE, level, expire}) => {
         // local notificaiton will be described this way local.componentName
         const global = !type.match(Notification.LOCAL);
-        const newNotif = new Notification({content, type, kind, global, expire})
+        const newNotif = new Notification({content, type, level, global, expire})
         
         if(global){
             this.notifs[Notification.GLOBAL][type].push(newNotif)

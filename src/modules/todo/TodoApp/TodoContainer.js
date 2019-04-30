@@ -9,6 +9,10 @@ import TodoList from "./TodoContainer/TodoList";
 import ButtonIcon from '../../../components/Button/ButtonIcon';
 import { Modal, ModalTitle } from "../../../components/Modal";
 
+import config from "../../../config";
+
+const { OPEN_MODAL, HALLO_MODAL } = config;
+
 
 
 @observer
@@ -16,6 +20,8 @@ class TodoContainer extends Component {
     async componentDidMount(){
         const { todoStore } = this.props;
         await todoStore.load();
+
+
     }
 
     render() {
@@ -24,8 +30,6 @@ class TodoContainer extends Component {
         const { 
             todoDateInput, 
             todoTaskInput, 
-            updateTaskInput, 
-            updateDateInput,
             modal,
         } = uiStore;
 
@@ -36,11 +40,8 @@ class TodoContainer extends Component {
             <section className="todo-container">
                 <WelcomeMessage name={firstName}/>
                 <TodoForm 
-                    dateInput={todoDateInput} 
-                    taskInput={todoTaskInput}
-                    updateTaskInput={updateTaskInput}
-                    updateDateInput={updateDateInput}
-                    onSubmit={create}
+                    inputs={[todoDateInput, todoTaskInput]} 
+                    createTodo={create}
                 />
 
                 <TodoList 
@@ -51,7 +52,7 @@ class TodoContainer extends Component {
                 />
 
                 <ButtonIcon 
-                    value={"OPEN MODAL"}
+                    value={OPEN_MODAL}
                     action={modal.open}
                     icon="plus"
                 />
@@ -61,7 +62,7 @@ class TodoContainer extends Component {
                     open={modal.isOpen}
                     close={modal.close}
                 >
-                    <ModalTitle>Hallo Modal</ModalTitle>
+                    <ModalTitle>{HALLO_MODAL}</ModalTitle>
                 </Modal>}
             </section>
         );

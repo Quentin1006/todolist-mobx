@@ -7,14 +7,14 @@ import NotificationBase from './NotificationBase';
 class Notification extends Component {
 
     render() {
-        const { type, message, icon, onClose } = this.props;
+        const { level, message, icon, onClose, classes } = this.props;
         return (
         <NotificationBase 
                 onClose={onClose}
                 message={message}
                 icon={icon}
-                type={type}
-                classes={"notification"}
+                level={level}
+                classes={`${classes} notification`}
             />
         );
     }
@@ -25,7 +25,7 @@ Notification.defaultProps = {
 }
 
 Notification.propTypes = {
-    type: PropTypes.string,
+    level: PropTypes.string,
     message: PropTypes.string.isRequired,
     icon: PropTypes.string,
     onClose: PropTypes.func.isRequired,

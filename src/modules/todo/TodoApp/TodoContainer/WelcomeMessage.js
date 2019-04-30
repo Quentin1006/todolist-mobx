@@ -8,6 +8,10 @@ const WelcomeMessage = ({name}) => {
     )
     
 }
+
+WelcomeMessage.defaultProps = {
+    name: ""
+}
     
 
 

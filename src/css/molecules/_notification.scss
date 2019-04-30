@@ -57,6 +57,11 @@
     color: $col_info;
 }
 
+.notification.success {
+    background-color: $col_bg_ok;
+    color: $col_ok;
+}
+
 
 .notification.error {
     background-color: $col_bg_alert;
@@ -90,5 +95,23 @@
         color: $col_info
     }
 }
+
+.snackbar.success {
+    .icon {
+        background-color: $col_bg_ok;
+        color: $col_ok;
+    }
+    
+}
+
+
+.snackbar.error {
+    .icon {
+        background-color: $col_bg_alert;
+        color: $col_alert;
+    }
+    
+}
+
 
 

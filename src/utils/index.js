@@ -1,4 +1,8 @@
 exports.firstToCap = (string) => {
+    if(string.length === 0 || !string){
+        return "";
+    }
+    
     return string.split(" ")
         .map(el => (
             (el[0]).toUpperCase() + el.substr(1)

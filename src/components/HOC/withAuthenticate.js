@@ -3,12 +3,15 @@ import { inject } from "mobx-react";
 
 
 const mapStateToProps = ({store}) => {
-    const { logIn, rememberme, sessionIsExpired, logOut }  = store.userStore;
+    const { logIn, logInFromSessId, rememberme, sessionIsExpired, logOut }  = store.sessionStore;
+    const { setUser } = store.userStore;
     return {
-        logIn, 
+        logIn,
+        logInFromSessId,
         rememberme,
         sessionIsExpired,
-        logOut
+        logOut,
+        setUser
     };
 }
 
@@ -22,7 +25,6 @@ export default ComponentToWrap => {
                 this.verifyIfSessionExpired();
             }
     
-    
             componentDidUpdate(){
                 this.verifyIfSessionExpired();
             }
@@ -33,7 +35,6 @@ export default ComponentToWrap => {
                     logOut();
                 }
             }
-    
     
             render(){
                 return (

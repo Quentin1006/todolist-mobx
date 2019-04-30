@@ -20,10 +20,10 @@ class NotificationBase extends Component {
 
 
     render() {
-        const { type, message,icon, classes } = this.props;
-        const iconName = icon ? icon : ICONS[type];
+        const { level, message, icon, classes } = this.props;
+        const iconName = icon ? icon : ICONS[level];
         return (
-            <div className={`notification-base ${type} ${classes}`} >
+            <div className={`notification-base ${level} ${classes}`} >
                <div className="icon">
                     <Icon icon={iconName}/>
                 </div>
@@ -37,12 +37,12 @@ class NotificationBase extends Component {
 
 
 NotificationBase.defaultProps = {
-    type: "info",
+    level: "info",
     classes: ""
 }
 
 NotificationBase.propTypes = {
-    type: PropTypes.oneOf(["error", "warning", "info", "success"]),
+    level: PropTypes.oneOf(["error", "warning", "info", "success"]),
     onClose: PropTypes.func.isRequired,
     message: PropTypes.string.isRequired,
     icon: PropTypes.string

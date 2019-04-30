@@ -38,11 +38,12 @@ class Snackbar extends Component {
 
 
     render() {
-        const { icon, message, isOpen, classes } = this.props; 
+        const { icon, message, isOpen, classes, ...rest } = this.props; 
         return (
             isOpen && 
             <Card classes={`${classes}`}>
                 <NotificationBase 
+                    {...rest}
                     onClose={this.onClose}
                     message={message}
                     icon={icon}

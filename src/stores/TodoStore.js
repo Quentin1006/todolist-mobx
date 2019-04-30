@@ -12,11 +12,9 @@ class TodoStore {
     rootStore;
     httpService; // service to communicate with the server for todos
     autoSave = false;
-
+    taskList = new Set(); // stores only the tasks
 
     @observable todos = [];
-    // stores only the tasks
-    @observable taskList = new Set(); 
     @observable isLoading = false;
     @observable lastDeleted = null;
     @observable isSyncWithServer = false;
@@ -34,19 +32,23 @@ class TodoStore {
         this.isLoading = true;
         const fetched = await this.httpService.fetchTodos();
 
-        this.todos = fetched.map(todo => new Todo(todo));
+        this.todos = fetched.map(todo => {
+            this.taskList.add(todo.task);
+            return new Todo(todo)
+        });
 
         this.isLoading = false;
     }
 
+    
     @action.bound
     create = ({task, deadline=0}) => {
         if(task.length <= MIN_TASK_LENGTH){
-            return {error: msg.TASK_IS_TOO_SHORT};
+            return {error: {task: msg.TASK_IS_TOO_SHORT}};
         }
 
         if(this.taskList.has(task)){
-            return {error: msg.TASK_ALREADY_EXIST}
+            return {error: {task: msg.TASK_ALREADY_EXIST}};
         }
         
         const infos = {task, deadline};
@@ -61,7 +63,7 @@ class TodoStore {
             this.sync()
         }
 
-        return todo;
+        return {todo};
 
     }
 

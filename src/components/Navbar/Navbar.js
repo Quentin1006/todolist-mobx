@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 
 class Navbar extends Component {

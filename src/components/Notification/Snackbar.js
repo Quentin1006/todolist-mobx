@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { Card } from "../Card"; 
 import NotificationBase from './NotificationBase';
+import withCSSTransition from "../HOC/withCSSTransition"
 
 
 class Snackbar extends Component {
@@ -11,24 +11,16 @@ class Snackbar extends Component {
         super(props);
         this.timeoutId =  null;
     }
-
-    onClose = () => {
-        if(this.timeoutId){
-            clearTimeout(this.timeoutId)
-            this.timeoutId = null;
-        }
-        this.props.onClose();
-    }
-
     
     autoDestruct = () => {
-        let { ttl, onClose } = this.props;
+        let { ttl } = this.props;
         if(ttl < 999){
             // So the user can set time in sec
             ttl = ttl*1000;
         }
-        this.timeoutId = setTimeout(onClose, ttl)
+        this.timeoutId = setTimeout(this.handleClose, ttl)
     }
+
 
     componentDidMount(){
         if(this.props.ttl){
@@ -37,14 +29,23 @@ class Snackbar extends Component {
     }
 
 
+    handleClose = () => {
+        if(this.timeoutId){
+            clearTimeout(this.timeoutId)
+            this.timeoutId = null;
+        }
+        this.props.close();
+
+    }
+
+
     render() {
         const { icon, message, isOpen, classes, ...rest } = this.props; 
         return (
-            isOpen && 
             <Card classes={`${classes}`}>
                 <NotificationBase 
                     {...rest}
-                    onClose={this.onClose}
+                    onClose={this.handleClose}
                     message={message}
                     icon={icon}
                     classes={"snackbar"}
@@ -61,8 +62,13 @@ Snackbar.defaultProps = {
 Snackbar.propTypes = {
     message: PropTypes.string,
     icon: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
     ttl: PropTypes.number
 };
 
-export default Snackbar;
+export default withCSSTransition({
+    timeout:400,
+    appear: true,
+    unmountOnExit: true,
+    classNames: "anim-snackbar"
+})(Snackbar);

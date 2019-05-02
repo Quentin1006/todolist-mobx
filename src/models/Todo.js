@@ -2,7 +2,8 @@ import { observable, computed, action } from "mobx";
 
 import config from "../config";
 
-const { SECONDS_IN_DAY, status } = config.Todo;
+const { SECONDS_IN_DAY } = config;
+const { status, msg } = config.Todo;
 const { ALERT, WARNING, OK } = status;
 
 class Todo {
@@ -36,18 +37,20 @@ class Todo {
         if(!this.deadline)
             return false;
 
-        const timeLeft = this.deadline - Date.now();
+        // timeLeft is in sec
+        const timeLeft = (this.deadline - Date.now()) / 1000;
         return timeLeft > 0 && timeLeft < SECONDS_IN_DAY;
     }
 
 
-    constructor({id=Date.now(), task, deadline=0, completed=false, authorId=null}){
+    constructor({id=Date.now(), task, deadline=0, completed=false, authorId=null}, taskList){
 
         this.id = id;
         this.task = task;
         this.completed = completed
         this.deadline = deadline;
         this.authorId= authorId;
+        this.taskList = taskList;
     }
 
 
@@ -61,6 +64,24 @@ class Todo {
         }
     }
 
+    @action.bound
+    edit = (newValue) => {
+        if(newValue === this.task){
+            return {success: true}
+        }
+
+        if(this.taskList.has(newValue)){
+            return {error: msg.TASK_ALREADY_EXIST};
+        }
+        
+        this.taskList.delete(this.task);
+        this.taskList.add(newValue);
+        
+        this.task = newValue
+        return {success: true};
+    
+
+    }
 
     @action.bound
     toggleComplete(){

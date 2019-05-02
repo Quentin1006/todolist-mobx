@@ -13,6 +13,12 @@ import Input from "../../../models/Input";
 
 @observer
 class Login extends Component {
+
+    handleLogin = () => {
+
+    }
+
+    
     render() {
         const { 
             modal,  
@@ -34,7 +40,7 @@ class Login extends Component {
                 
                 <If cond={modal.isOpen}>
                     <Modal
-                        open={modal.isOpen}
+                        isOpen={modal.isOpen}
                         close={modal.close}
                     >
                         <ModalTitle>{logInText}</ModalTitle>

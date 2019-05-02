@@ -61,7 +61,7 @@ class TestNotifs extends Component {
                         <Snackbar 
                             isOpen={true}
                             message="Hello im a notifiaction"
-                            onClose={() => {}}
+                            close={() => {}}
                         />
                         {/** 
                           * This Comp test whether a comp can update his state

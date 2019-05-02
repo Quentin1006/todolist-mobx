@@ -19,8 +19,9 @@ class Input extends Component {
             name="",
             type,
             value="",
-            onChange,
+            onChange, // important to mention it so its not overwritten in the input
             placeholder,
+            classes,
             ...otherProps
         } = this.props;
         
@@ -28,7 +29,7 @@ class Input extends Component {
         return (
 
             <input 
-                className="input"
+                className={`input ${classes}`}
                 id={id}
                 type={type}
                 name={name? name: id}
@@ -45,6 +46,7 @@ Input.propTypes = {
     id: PropTypes.string.isRequired,
     type: PropTypes.oneOf(types).isRequired,
     onChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
     name: PropTypes.string,
 
 }

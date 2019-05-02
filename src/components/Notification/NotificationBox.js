@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Notification from './Notification';
 import Snackbar from "./Snackbar";
-import { prototype } from 'events';
 
 
 const getTypeOfNotif = (type) => {
@@ -29,6 +28,8 @@ class NotificationBox extends Component {
             onCloseNotif(id)
         }
     }
+
+
     render() {
         const { notifs, type, maxNotifs } = this.props;
         const from = Math.max(notifs.length - maxNotifs, 0);
@@ -46,7 +47,7 @@ class NotificationBox extends Component {
                         message={content}
                         level={level}
                         ttl={expire}
-                        onClose={this.handleCloseNotif(id)}
+                        close={this.handleCloseNotif(id)}
                         key={id}
                     />
                 ))}

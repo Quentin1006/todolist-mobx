@@ -1,74 +1,40 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
 
+import withCSSTransition from "../HOC/withCSSTransition";
 
 class Modal extends Component {
-    constructor(props) {
-        super(props);
-
-        const isOpen = props.open ? "open" : "";
-
-        // Parent of the modal and the backdrop
-        this.container = document.createElement('div');
-        this.container.className = `modal-container `+isOpen;
-
-        // What contains the modal
-        this.wrapper = document.createElement('div');
-        this.wrapper.className = `modal-wrapper`;
-
-        this.addCloseBtn(this.wrapper);
-
-        // Backdrop behind the modal
-        this.backdrop = document.createElement("div");
-        this.backdrop.className = `modal-backdrop`;
-
-        this.container.appendChild(this.backdrop);
-        this.container.appendChild(this.wrapper);
-
-
-        if(props.closeOnBackdrop){
-            this.setAsModalCloser(this.backdrop);
-        }
-
+    renderModal = () => {
+        const { isOpen, close, closeOnBackdrop, children } = this.props;
+        return (
+            <div className={`modal-container ${isOpen?"open":""}`}>
+                <div className="modal-wrapper">
+                    <a 
+                        href="#" 
+                        className="modal-close-btn"
+                        style={{position: "absolute", right: "10px", top: "10px"}}
+                        onClick={close}
+                    >
+                    x
+                    </a>
+                    {children}
+                </div>
+            
+                <div 
+                    className="modal-backdrop" 
+                    onClick={closeOnBackdrop && close}
+                >
+                </div>
+            </div>
+        )
     }
 
-
-    componentDidMount(){
-        document.body.appendChild(this.container);        
-    }
-
-
-    componentWillUnmount() {
-        document.body.removeChild(this.container);
-    }
-
-
-    addCloseBtn = (wrapper) => {
-
-        const closeEl = document.createElement("a");
-        closeEl.className = "modal-close-btn";
-        closeEl.href = "#";
-        closeEl.setAttribute("style", "position: absolute; right: 10px; top: 10px;");
-        closeEl.innerHTML = "x";
-
-        this.setAsModalCloser(closeEl);
-        wrapper.appendChild(closeEl);
-    }
-
-
-    setAsModalCloser = (el) => {
-        const { close } = this.props;
-        el.addEventListener("click", (e) => {
-            e.stopPropagation();
-            close()
-        })
-    }
 
     render() {
         return ReactDOM.createPortal(
-            this.props.children,
-            this.wrapper
+            this.renderModal(),
+            document.body
         )
     }
 }
@@ -78,10 +44,15 @@ Modal.defaultProps = {
 }
 
 Modal.propTypes = {
-    open: PropTypes.bool.isRequired,
+    isOpen: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     closeOnBackdrop: PropTypes.bool,
     children: PropTypes.any
 };
 
-export default Modal;
+export default withCSSTransition({
+    timeout:400,
+    appear: true,
+    unmountOnExit: true,
+    classNames:"modal-slide"
+})(Modal);

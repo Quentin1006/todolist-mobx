@@ -10,6 +10,7 @@ import AppIsSync from "./modules/appSync/AppIsSync";
 import Authenticate from "./components/Authenticate"
 import TestStore from './modules/test/TestStore';
 import TestNotifs from './modules/test/TestNotifs';
+import TestEditableLabel from './modules/test/TestEditableLabel';
 
 const store = new RootStore();
 
@@ -21,8 +22,9 @@ class App extends Component {
                     <Fragment>
                         <Authenticate>
                             <TodoApp />
-                            <TestStore />
                             <TestNotifs />
+                            {/* <TestStore />
+                            <TestEditableLabel /> */}
                         </Authenticate>
                         <AppIsSync />
                         

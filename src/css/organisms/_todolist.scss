@@ -9,6 +9,27 @@
     }
 }
 
+.anim-todoitem-enter, .anim-todoitem-appear {
+    opacity: 0;
+    
+}
+
+
+.anim-todoitem-enter-active, .anim-todoitem-appear-active {
+    opacity: 1;
+    transition: opacity 400ms ease-in-out
+}
+
+.anim-todoitem-exit {
+    opacity: 1;
+}
+
+
+.anim-todoitem-exit-active {
+    opacity: 0;
+    transition: opacity 400ms ease-in-out
+}
+
 .sortable-helper {
     box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2), 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.8);

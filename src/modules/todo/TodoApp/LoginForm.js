@@ -32,7 +32,7 @@ class LoginForm extends Component {
                 <div>
                     <Notification
                         onClose={() => {setError("")}}
-                        type="error"
+                        level="error"
                         message={error}
                     />
                 </div>}

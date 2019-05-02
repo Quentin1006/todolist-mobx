@@ -6,8 +6,7 @@ import { observer } from 'mobx-react';
 import WelcomeMessage from "./TodoContainer/WelcomeMessage";
 import TodoForm from "./TodoContainer/TodoForm";
 import TodoList from "./TodoContainer/TodoList";
-import ButtonIcon from '../../../components/Button/ButtonIcon';
-import { Modal, ModalTitle } from "../../../components/Modal";
+import { Modal, ModalTitle, ButtonIcon } from "../../../components";
 
 import config from "../../../config";
 
@@ -20,12 +19,10 @@ class TodoContainer extends Component {
     async componentDidMount(){
         const { todoStore } = this.props;
         await todoStore.load();
-
-
     }
 
     render() {
-        const { userStore, uiStore, todoStore } = this.props;
+        const { userStore, uiStore, todoStore, notificationStore } = this.props;
         const { firstName } = userStore;
         const { 
             todoDateInput, 
@@ -49,6 +46,7 @@ class TodoContainer extends Component {
                     deleteTodo={remove} 
                     reorderTodos={reorder}
                     completeTodo={toggleComplete}
+                    addNotif={notificationStore.add}
                 />
 
                 <ButtonIcon 
@@ -59,7 +57,7 @@ class TodoContainer extends Component {
 
                 {modal.isOpen &&
                 <Modal
-                    open={modal.isOpen}
+                    isOpen={modal.isOpen}
                     close={modal.close}
                 >
                     <ModalTitle>{HALLO_MODAL}</ModalTitle>

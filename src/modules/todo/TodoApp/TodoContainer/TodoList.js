@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from "prop-types";
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { observer } from 'mobx-react';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 // HOC
 import withLoader from '../../../../components/HOC/withLoader';
@@ -22,6 +23,7 @@ const SortableList = SortableContainer(({children}) => (
 @observer
 class TodoList extends Component {
 
+
     render() {
         const { todos, deleteTodo, reorderTodos } = this.props;
         const onSortEnd = ({oldIndex, newIndex}) => {
@@ -29,28 +31,39 @@ class TodoList extends Component {
         };
 
         return (
-            <Card classes="todo-list">
-                <SortableList 
-                    onSortEnd={onSortEnd} 
-                    lockAxis={"y"} 
-                    distance={5}
-                    helperClass="sortable-helper"
-                >
-                    <ul>
-                        {todos.map((todo, idx) => (
-                            <SortableItem 
-                                key={todo.id}
-                                index={idx} 
-                                deleteTodo={deleteTodo}
-                                todo={todo}
-                            />
-                        ))}
-                    </ul>
-                </SortableList>
-            </Card>
+            
+                <Card classes="todo-list">
+                    <SortableList 
+                        onSortEnd={onSortEnd} 
+                        lockAxis={"y"} 
+                        distance={5}
+                        helperClass="sortable-helper"
+                    >
+                        <TransitionGroup component={"ul"}>
+                            {todos.map((todo, idx) => (
+                                <CSSTransition
+                                    key={todo.id}
+                                    timeout={400}
+                                    classNames={"anim-todoitem"}
+                                    onEnter={()=>console.log("Enter")}
+                                    onEntering={()=>console.log("Entering")}
+                                    onEntered={()=>console.log("Entered")}
+                                >
+                                    <SortableItem 
+                                        index={idx} 
+                                        deleteTodo={deleteTodo}
+                                        todo={todo}
+                                    />
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
+                    </SortableList>
+                </Card>
+            
         );
     }
 }
+
 
 TodoList.defaultProps = {
     todos: []

@@ -34,10 +34,14 @@ class TodoStore {
 
         this.todos = fetched.map(todo => {
             this.taskList.add(todo.task);
-            return new Todo(todo)
+            return this._instantiateTodo(todo);
         });
 
         this.isLoading = false;
+    }
+
+    _instantiateTodo = (todo) => {
+        return new Todo(todo, this.taskList)
     }
 
     
@@ -52,7 +56,7 @@ class TodoStore {
         }
         
         const infos = {task, deadline};
-        const todo = new Todo(infos);
+        const todo = this._instantiateTodo(infos);
 
         this.todos.unshift(todo);
         this.taskList.add(task);
@@ -68,7 +72,7 @@ class TodoStore {
     }
 
     @action.bound
-    edit = (todoId) => {
+    edit = (todoId, newValue) => {
         throw new Error("Not implemented yet");
     }
 
@@ -78,6 +82,7 @@ class TodoStore {
         this.todos = this.todos.filter(todo => {
             if(todo.id === todoId){
                 this.lastDeleted = todo;
+                this.taskList.delete(todo.task);
                 taskFound = true;
                 return false;
             }

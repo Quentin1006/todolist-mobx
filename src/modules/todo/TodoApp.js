@@ -51,8 +51,10 @@ class TodoApp extends Component {
                 level: SUCCESS,
                 expire: 3
             })
-
         }
+
+        return {error, user}
+
     }
 
 

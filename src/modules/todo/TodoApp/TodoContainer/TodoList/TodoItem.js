@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import format from "date-fns/format";
 
-import {ButtonIcon, CheckboxInput } from "../../../../../components"
+import {ButtonIcon, CheckboxInput, EditableLabel } from "../../../../../components";
 import { observer } from 'mobx-react';
 
 
@@ -15,6 +15,7 @@ class TodoItem extends Component {
 
     }
 
+
     
     render() {
         const { todo } = this.props;
@@ -26,13 +27,17 @@ class TodoItem extends Component {
             <li className={`todo-item ${colorInGreen}`}>
                 <div className="todo-checkbox">
                     <CheckboxInput  
-                        id={"todo-checkbox"}
+                        id={String(todo.id)}
                         checked={todo.completed}
                         value={todo.completed} 
                         onChange={todo.toggleComplete}
                     />
                 </div>
-                <div className="todo-task todo-cell">{todo.task}</div>
+                <EditableLabel 
+                    classes={"todo-task todo-cell"}
+                    label={todo.task}
+                    onEdit={todo.edit}
+                />
                 <div className={`todo-deadline todo-cell ${deadlineClass}`}>{formattedDeadline} </div>
                 <div className="todo-delete">
                     <ButtonIcon 

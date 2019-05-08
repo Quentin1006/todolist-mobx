@@ -1,0 +1,23 @@
+$timeout: 0.4s;
+
+.anim-fade-enter,
+.anim-fade-appear {
+    opacity: 0;
+}
+
+
+.anim-fade-enter-active,
+.anim-fade-appear-active {
+    opacity: 1;
+    transition: opacity $timeout ease-in-out;
+}
+
+
+.anim-fade-exit {
+}
+
+
+.anim-fade-exit-active {
+    opacity: 0;
+    transition: opacity $timeout ease-in-out;
+}

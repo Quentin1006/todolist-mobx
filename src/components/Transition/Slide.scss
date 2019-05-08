@@ -1,0 +1,108 @@
+$slide-timeout: 0.4s;
+
+
+// from left
+.anim-slide-left-appear, 
+.anim-slide-left-enter {
+    transform: translateX(-100vw);
+}
+
+.anim-slide-left-appear-active, 
+.anim-slide-left-enter-active {
+    transform: translateX(0);
+    transition: transform $slide-timeout ease-in-out;
+    
+}
+
+
+.anim-slide-left-exit {
+}
+
+.anim-slide-left-exit-active {
+    transform: translateX(-100vw);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+
+
+// from right
+.anim-slide-right-appear, 
+.anim-slide-right-enter {
+    transform: translateX(100vw);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-right-appear-active, 
+.anim-slide-right-enter-active {
+    transform: translateX(0);
+    transition: transform $slide-timeout ease-in-out; 
+}
+
+.anim-slide-right-appear-done, 
+.anim-slide-right-enter-done {
+    //transform: translateX(100vw) translate(-500px);
+} 
+
+
+.anim-slide-right-exit {
+    transform: translateX(0px);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-right-exit-active {
+    transform: translateX(100vw);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+
+
+// from top
+.anim-slide-top-appear, 
+.anim-slide-top-enter {
+    transform: translateY(-100vh);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-top-appear-active, 
+.anim-slide-top-enter-active {
+    transform: translateY(0);
+    transition: transform $slide-timeout ease-in-out;
+    
+}
+
+
+.anim-slide-top-exit {
+    transform: translateY(0px);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-top-exit-active {
+    transform: translateY(-100vh);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+
+// from bottom
+.anim-slide-bottom-appear, 
+.anim-slide-bottom-enter {
+    transform: translateY(100vh);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-bottom-appear-active, 
+.anim-slide-bottom-enter-active {
+    transform: translateY(0);
+    transition: transform $slide-timeout ease-in-out;
+    
+}
+
+
+.anim-slide-bottom-exit {
+    transform: translateY(0px);
+    transition: transform $slide-timeout ease-in-out;
+}
+
+.anim-slide-bottom-exit-active {
+    transform: translateY(100vh);
+    transition: transform $slide-timeout ease-in-out;
+}

@@ -1,64 +1,62 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { TransitionGroup } from "react-transition-group";
 import { observer } from 'mobx-react';
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 // HOC
 import withLoader from '../../../../components/HOC/withLoader';
 
 // Components
-import { Card } from "../../../../components/Card";
+import { Card } from "../../../../components";
 import TodoItem from "./TodoList/TodoItem";
-
+import { Fade } from "../../../../components/Transition"
 
 
 const SortableItem = SortableElement(TodoItem);
 
-const SortableList = SortableContainer(({children}) => (
-    <Fragment>{children}</Fragment>
-))
+const SortableList = SortableContainer(({children}) => (children))
 
 
 @observer
 class TodoList extends Component {
 
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.props.reorderTodos(oldIndex, newIndex);
+    };
+
+    renderList = (todos, deleteTodo) => (
+        <SortableList 
+            onSortEnd={this.onSortEnd} 
+            lockAxis={"y"} 
+            distance={5}
+            helperClass="sortable-helper"
+        >
+            <TransitionGroup component={"ul"}>
+            {todos.map((todo, idx) => (
+                <Fade key={todo.id}>
+                <SortableItem 
+                    index={idx} 
+                    deleteTodo={deleteTodo}
+                    todo={todo}
+                />
+                </Fade>
+                
+            ))}
+            </TransitionGroup>
+        </SortableList> 
+    )
 
     render() {
-        const { todos, deleteTodo, reorderTodos } = this.props;
-        const onSortEnd = ({oldIndex, newIndex}) => {
-            reorderTodos(oldIndex, newIndex);
-        };
+        const { todos, deleteTodo } = this.props;
 
         return (
             
-                <Card classes="todo-list">
-                    <SortableList 
-                        onSortEnd={onSortEnd} 
-                        lockAxis={"y"} 
-                        distance={5}
-                        helperClass="sortable-helper"
-                    >
-                        <TransitionGroup component={"ul"}>
-                            {todos.map((todo, idx) => (
-                                <CSSTransition
-                                    key={todo.id}
-                                    timeout={400}
-                                    classNames={"anim-todoitem"}
-                                    onEnter={()=>console.log("Enter")}
-                                    onEntering={()=>console.log("Entering")}
-                                    onEntered={()=>console.log("Entered")}
-                                >
-                                    <SortableItem 
-                                        index={idx} 
-                                        deleteTodo={deleteTodo}
-                                        todo={todo}
-                                    />
-                                </CSSTransition>
-                            ))}
-                        </TransitionGroup>
-                    </SortableList>
-                </Card>
+            <Card classes="todo-list">
+                {todos.length > 0 
+                ? this.renderList(todos, deleteTodo)
+                : "No task yet..."}    
+            </Card>
             
         );
     }

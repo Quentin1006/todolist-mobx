@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 
 import withStores from "../../components/HOC/withStores";
 import { ButtonIcon, Card, NotificationBox, Snackbar } from "../../components";
+import Slide from "../../components/Transition/Slide";
 import ComponentWithInternalState from "./ComponentWithInternalState";
 
 let id = 0;
@@ -11,6 +12,9 @@ let id = 0;
 
 @observer
 class TestNotifs extends Component {
+    state={
+        snackbarDemoIsOpen: true
+    }
 
     createVolatileNotif = () => {
         const { add } = this.props.notificationStore;
@@ -58,11 +62,15 @@ class TestNotifs extends Component {
 
 
                         </fieldset>
-                        <Snackbar 
-                            isOpen={true}
-                            message="Hello im a notifiaction"
-                            close={() => {}}
-                        />
+                        <Slide 
+                            in={this.state.snackbarDemoIsOpen}
+                            from={"left"}
+                        >
+                            <Snackbar 
+                                message="Hello im a notifiaction"
+                                onClose={() => {this.setState({snackbarDemoIsOpen: false})}}
+                            />
+                        </Slide>
                         {/** 
                           * This Comp test whether a comp can update his state
                           * Inside a comp that uses memo

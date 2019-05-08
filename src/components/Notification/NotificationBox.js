@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Notification from './Notification';
 import Snackbar from "./Snackbar";
+import { Fade, Slide } from "../Transition";
+import { TransitionGroup } from "react-transition-group";
 
 
 const getTypeOfNotif = (type) => {
@@ -14,11 +16,22 @@ const getTypeOfNotif = (type) => {
     }
 }
 
+const getAnimation = (type) => {
+    switch(type){
+        case "snackbar":
+            return Slide;
+        case "regular":
+        default:
+            return Fade;
+    }
+}
+
 class NotificationBox extends Component {
 
     constructor(props){
         super(props);
         this.typeOfNotif = getTypeOfNotif(props.type);
+        this.typeOfAnim = getAnimation(props.type);
     }
 
 
@@ -36,21 +49,24 @@ class NotificationBox extends Component {
         const notifsToDisplay = notifs.slice(from);
         
         const Notif = this.typeOfNotif;
+        const Anim = this.typeOfAnim;
         const typeClass = type === "snackbar" ? "snackbar" : "notification";
 
         return (
             <div className={`${typeClass}-container`}>
-                {notifsToDisplay.map(({content, date=0, expire=0, level, id}) => (
-                    <Notif
-                        isOpen={true}
-                        date={date}
-                        message={content}
-                        level={level}
-                        ttl={expire}
-                        close={this.handleCloseNotif(id)}
-                        key={id}
-                    />
-                ))}
+                <TransitionGroup>
+                    {notifsToDisplay.map(({content, date=0, expire=0, level, id}) => (
+                        <Anim key={id}>
+                            <Notif
+                                date={date}
+                                message={content}
+                                level={level}
+                                ttl={expire}
+                                onClose={this.handleCloseNotif(id)}
+                            />
+                        </Anim>
+                    ))}
+                </TransitionGroup>
             </div>
         );
     }

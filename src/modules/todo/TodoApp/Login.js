@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 
 import { Modal, ModalTitle, ButtonIcon } from "../../../components";
+import { Fade, Slide } from "../../../components/Transition";
 import LoginForm from "./LoginForm"
-import If from "../../../components/utils/If";
 
 import Input from "../../../models/Input";
 
@@ -13,11 +13,6 @@ import Input from "../../../models/Input";
 
 @observer
 class Login extends Component {
-
-    handleLogin = () => {
-
-    }
-
     
     render() {
         const { 
@@ -30,17 +25,18 @@ class Login extends Component {
         } = this.props;
         
         return (
-            <Fragment>
-                
+            <Fragment> 
                 <ButtonIcon
                     action={modal.open}
                     value={logInText}
                     icon="sign-in-alt"
                 />
                 
-                <If cond={modal.isOpen}>
+                <Fade 
+                    in={modal.isOpen}
+                    onEnter={()=>{console.log("Enter modal")}}
+                >
                     <Modal
-                        isOpen={modal.isOpen}
                         close={modal.close}
                     >
                         <ModalTitle>{logInText}</ModalTitle>
@@ -49,10 +45,9 @@ class Login extends Component {
                             loginIdentifierInput = {loginIdentifierInput}
                             rememberme={rememberme}
                             toggleRememberme={toggleRememberme}
-                        />
+                        />    
                     </Modal>
-                </If>
-                
+                </Fade>
             </Fragment>
         );
     }

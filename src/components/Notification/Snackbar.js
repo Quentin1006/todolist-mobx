@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from "../Card"; 
 import NotificationBase from './NotificationBase';
-import withCSSTransition from "../HOC/withCSSTransition"
 
 
 class Snackbar extends Component {
@@ -34,13 +33,13 @@ class Snackbar extends Component {
             clearTimeout(this.timeoutId)
             this.timeoutId = null;
         }
-        this.props.close();
+        this.props.onClose();
 
     }
 
 
     render() {
-        const { icon, message, isOpen, classes, ...rest } = this.props; 
+        const { icon, message, classes, ...rest } = this.props; 
         return (
             <Card classes={`${classes}`}>
                 <NotificationBase 
@@ -62,13 +61,8 @@ Snackbar.defaultProps = {
 Snackbar.propTypes = {
     message: PropTypes.string,
     icon: PropTypes.string,
-    close: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
     ttl: PropTypes.number
 };
 
-export default withCSSTransition({
-    timeout:400,
-    appear: true,
-    unmountOnExit: true,
-    classNames: "anim-snackbar"
-})(Snackbar);
+export default Snackbar;

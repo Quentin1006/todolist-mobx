@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
 
-import withCSSTransition from "../HOC/withCSSTransition";
 
 class Modal extends Component {
     renderModal = () => {
-        const { isOpen, close, closeOnBackdrop, children } = this.props;
+        const { close, closeOnBackdrop, children, classes } = this.props;
         return (
-            <div className={`modal-container ${isOpen?"open":""}`}>
+            <div className={`modal-container ${classes}`}>
                 <div className="modal-wrapper">
                     <a 
                         href="#" 
@@ -44,15 +43,10 @@ Modal.defaultProps = {
 }
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     closeOnBackdrop: PropTypes.bool,
-    children: PropTypes.any
+    children: PropTypes.any,
+    classes: PropTypes.string
 };
 
-export default withCSSTransition({
-    timeout:400,
-    appear: true,
-    unmountOnExit: true,
-    classNames:"modal-slide"
-})(Modal);
+export default Modal;

@@ -60,7 +60,13 @@ class TodoContainer extends Component {
                     isOpen={modal.isOpen}
                     close={modal.close}
                 >
+               
                     <ModalTitle>{HALLO_MODAL}</ModalTitle>
+                    <ButtonIcon
+                        icon={"plus"}
+                        value={"CLOSE"}
+                        action={modal.close}
+                    />                
                 </Modal>}
             </section>
         );

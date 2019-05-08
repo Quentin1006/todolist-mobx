@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 
-import { TextInput, ButtonIcon, Notification } from "../../../components";
-import CheckboxInput from '../../../components/Input/CheckboxInput';
+import { TextInput, ButtonIcon, Notification, CheckboxInput } from "../../../components";
+import { Fade } from '../../../components/Transition';
 
 
 
@@ -27,15 +27,13 @@ class LoginForm extends Component {
 
         return (
             <div className="form-login-container">  
-                
-                {error.length > 0 &&
-                <div>
+                <Fade in={error.length > 0}>
                     <Notification
                         onClose={() => {setError("")}}
                         level="error"
                         message={error}
                     />
-                </div>}
+                </Fade>
                 <div className="login-nameinput-wrapper">
                     <TextInput 
                         id="form-login-input"

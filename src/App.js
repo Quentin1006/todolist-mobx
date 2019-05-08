@@ -9,6 +9,7 @@ import AppIsSync from "./modules/appSync/AppIsSync";
 
 import Authenticate from "./components/Authenticate"
 import TestStore from './modules/test/TestStore';
+import TestAnim from './modules/test/TestAnim';
 import TestNotifs from './modules/test/TestNotifs';
 import TestEditableLabel from './modules/test/TestEditableLabel';
 
@@ -23,6 +24,7 @@ class App extends Component {
                         <Authenticate>
                             <TodoApp />
                             <TestNotifs />
+                            <TestAnim />
                             {/* <TestStore />
                             <TestEditableLabel /> */}
                         </Authenticate>
